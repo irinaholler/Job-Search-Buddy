@@ -906,6 +906,22 @@ function buildLinkedInUrl(title, location, skills) {
   return `https://www.linkedin.com/jobs/search/?keywords=${keywordsEncoded}&location=${locationEncoded}`;
 }
 
+// XING: title + location
+function buildXingUrl(title, location) {
+  let cleanLocation = location || "Deutschland";
+  cleanLocation = cleanLocation
+    .replace(/\s*(oder|or)\s+(Remote|Hybrid)/gi, "")
+    .trim();
+  if (!cleanLocation) cleanLocation = "Deutschland";
+
+  const cleanTitle = title.replace(/[\/,]/g, " ").trim();
+
+  const titleEncoded = encodeURIComponent(cleanTitle);
+  const locationEncoded = encodeURIComponent(cleanLocation);
+
+  return `https://www.xing.com/jobs/search?keywords=${titleEncoded}&location=${locationEncoded}`;
+}
+
 // Custom portals: title + skills + location, no explicit work mode
 function buildCustomPortalUrl(portal, title, location, skills) {
   let cleanLocation = location || "Deutschland";
@@ -2322,6 +2338,7 @@ function App() {
         indeed: buildIndeedUrl(title, profile.location),
         stepstone: buildStepstoneUrl(title, profile.location),
         linkedin: buildLinkedInUrl(title, profile.location, parsedSkills),
+        xing: buildXingUrl(title, profile.location),
       };
 
       customPortals.forEach((portal) => {
@@ -2527,6 +2544,7 @@ function App() {
           `${t.indeed}: ${item.indeed}`,
           `${t.stepstone}: ${item.stepstone}`,
           `${t.linkedin}: ${item.linkedin}`,
+          `${t.xing}: ${item.xing}`,
         ];
 
         Object.keys(item)
@@ -3114,6 +3132,7 @@ function App() {
                         <th style={{ padding: "0.75rem 0.5rem", fontWeight: "600" }}>{t.indeed}</th>
                         <th style={{ padding: "0.75rem 0.5rem", fontWeight: "600" }}>{t.stepstone}</th>
                         <th style={{ padding: "0.75rem 0.5rem", fontWeight: "600" }}>{t.linkedin}</th>
+                        <th style={{ padding: "0.75rem 0.5rem", fontWeight: "600" }}>{t.xing}</th>
                         {customPortals.length > 0 && customPortals.map((portal) => (
                           <th key={portal.id} style={{ padding: "0.75rem 0.5rem", fontWeight: "600" }}>
                             {portal.name}
@@ -3166,6 +3185,17 @@ function App() {
                               style={{ display: "inline-block", fontSize: "0.85rem", padding: "0.3rem 0.6rem" }}
                             >
                               {t.linkedin}
+                            </a>
+                          </td>
+                          <td style={{ padding: "0.75rem 0.5rem" }}>
+                            <a
+                              href={item.xing}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="link-btn"
+                              style={{ display: "inline-block", fontSize: "0.85rem", padding: "0.3rem 0.6rem" }}
+                            >
+                              {t.xing}
                             </a>
                           </td>
                           {customPortals.map((portal) => {
@@ -3224,6 +3254,14 @@ function App() {
                           className="link-btn"
                         >
                           {t.linkedin}
+                        </a>
+                        <a
+                          href={item.xing}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="link-btn"
+                        >
+                          {t.xing}
                         </a>
                         {Object.keys(item)
                           .filter((key) => key.startsWith("custom_"))

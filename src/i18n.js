@@ -57,6 +57,7 @@ export const translations = {
         indeed: "Indeed",
         stepstone: "StepStone",
         linkedin: "LinkedIn",
+        xing: "XING",
         searchOn: "Search on",
 
         // Chatbot
@@ -207,6 +208,7 @@ export const translations = {
         indeed: "Indeed",
         stepstone: "StepStone",
         linkedin: "LinkedIn",
+        xing: "XING",
         searchOn: "Auf",
 
         // Chatbot
