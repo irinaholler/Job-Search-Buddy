@@ -109,6 +109,11 @@ export const translations = {
         applicationSaved: "Application saved!",
         applicationDeleted: "Application deleted!",
         jobLink: "Job Link",
+        applicationTrackerExplanation: "Track all your job applications in one place. Monitor status, dates, notes, and company information. Perfect for staying organized during your job search.",
+        applicationTrackerHowTo: "How to use:",
+        applicationStep1: "1. Add an application – Click 'Add Application' and fill in company, position, date, and status",
+        applicationStep2: "2. Track progress – Update status as you move through interviews (Applied → Interview → Offer/Rejected)",
+        applicationStep3: "3. Add notes – Keep track of important details, contact persons, or next steps",
 
         // Company Research
         companyResearch: "Company Research",
@@ -117,6 +122,11 @@ export const translations = {
         companyLinkedIn: "LinkedIn",
         companyGlassdoor: "Glassdoor",
         searchInfo: "Enter company name to find research links",
+        companyResearchExplanation: "Quickly research companies before applying. Get instant links to their LinkedIn page, Glassdoor reviews, and website. Make informed decisions about where to apply.",
+        companyResearchHowTo: "How to use:",
+        companyStep1: "1. Enter company name – Type the company name in the search field",
+        companyStep2: "2. Get research links – Click the links to view LinkedIn, Glassdoor reviews, or company website",
+        companyStep3: "3. Research before applying – Learn about company culture, salaries, and reviews",
 
         // Multi-Profile
         profiles: "Profiles",
@@ -132,11 +142,12 @@ export const translations = {
         profileLoaded: "Profile loaded!",
         profileDeleted: "Profile deleted!",
         defaultProfile: "Default",
-        profileExplanation: "Save different job search profiles for different roles, locations, or CV versions. Switch between them anytime.",
+        profileExplanation: "Save your complete job search setup (CV, job titles, location, settings) as a profile. Perfect for different roles, locations, or CV versions. Switch between profiles anytime.",
         howToUseProfiles: "How it works:",
-        profileStep1: "1. Create a profile – Enter a name and click 'Save Profile' to save your current CV, job titles, and settings",
-        profileStep2: "2. Switch profiles – Click any profile button to load it",
-        profileStep3: "3. Export/Import – Back up your profiles or share them between devices",
+        profileStep1: "1. Set up your profile – Upload your CV, add job titles, and configure your settings",
+        profileStep2: "2. Save it – Enter a name (e.g., 'Frontend Developer') and click 'Save Profile'",
+        profileStep3: "3. Switch anytime – Click any profile button to instantly load that complete setup",
+        profileTip: "💡 Tip: Create profiles after you've set up your CV and job titles for the best experience.",
     },
     de: {
         // Header
@@ -247,6 +258,11 @@ export const translations = {
         applicationSaved: "Bewerbung gespeichert!",
         applicationDeleted: "Bewerbung gelöscht!",
         jobLink: "Stellenlink",
+        applicationTrackerExplanation: "Verwalte alle deine Bewerbungen an einem Ort. Verfolge Status, Daten, Notizen und Firmeninformationen. Perfekt, um während der Jobsuche organisiert zu bleiben.",
+        applicationTrackerHowTo: "So verwendest du es:",
+        applicationStep1: "1. Bewerbung hinzufügen – Klicke auf 'Bewerbung hinzufügen' und fülle Firma, Position, Datum und Status aus",
+        applicationStep2: "2. Fortschritt verfolgen – Aktualisiere den Status während du durch Interviews gehst (Beworben → Interview → Angebot/Abgelehnt)",
+        applicationStep3: "3. Notizen hinzufügen – Halte wichtige Details, Ansprechpartner oder nächste Schritte fest",
 
         // Company Research
         companyResearch: "Unternehmens-Recherche",
@@ -255,6 +271,11 @@ export const translations = {
         companyLinkedIn: "LinkedIn",
         companyGlassdoor: "Glassdoor",
         searchInfo: "Unternehmensname eingeben, um Recherche-Links zu finden",
+        companyResearchExplanation: "Recherchiere schnell Unternehmen vor der Bewerbung. Erhalte sofortige Links zu LinkedIn, Glassdoor-Bewertungen und Website. Triff informierte Entscheidungen, wo du dich bewirbst.",
+        companyResearchHowTo: "So verwendest du es:",
+        companyStep1: "1. Firmenname eingeben – Tippe den Firmennamen ins Suchfeld",
+        companyStep2: "2. Recherche-Links erhalten – Klicke auf die Links für LinkedIn, Glassdoor-Bewertungen oder Firmen-Website",
+        companyStep3: "3. Vor Bewerbung recherchieren – Erfahre mehr über Unternehmenskultur, Gehälter und Bewertungen",
 
         // Multi-Profile
         profiles: "Profile",
@@ -270,11 +291,12 @@ export const translations = {
         profileLoaded: "Profil geladen!",
         profileDeleted: "Profil gelöscht!",
         defaultProfile: "Standard",
-        profileExplanation: "Speichere verschiedene Job-Suchprofile für unterschiedliche Rollen, Standorte oder CV-Versionen. Wechsle jederzeit zwischen ihnen.",
+        profileExplanation: "Speichere dein komplettes Job-Such-Setup (CV, Jobtitel, Ort, Einstellungen) als Profil. Perfekt für verschiedene Rollen, Standorte oder CV-Versionen. Wechsle jederzeit zwischen Profilen.",
         howToUseProfiles: "So funktioniert's:",
-        profileStep1: "1. Profil erstellen – Gib einen Namen ein und klicke auf 'Profil speichern', um dein aktuelles CV, Jobtitel und Einstellungen zu speichern",
-        profileStep2: "2. Profil wechseln – Klicke auf einen Profil-Button, um es zu laden",
-        profileStep3: "3. Export/Import – Sichere deine Profile oder teile sie zwischen Geräten",
+        profileStep1: "1. Profil einrichten – Lade dein CV hoch, füge Jobtitel hinzu und konfiguriere deine Einstellungen",
+        profileStep2: "2. Speichern – Gib einen Namen ein (z.B. 'Frontend Developer') und klicke auf 'Profil speichern'",
+        profileStep3: "3. Jederzeit wechseln – Klicke auf einen Profil-Button, um dieses komplette Setup sofort zu laden",
+        profileTip: "💡 Tipp: Erstelle Profile am besten, nachdem du dein CV und Jobtitel eingerichtet hast.",
     },
 };
 

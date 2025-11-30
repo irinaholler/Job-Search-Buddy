@@ -2632,7 +2632,7 @@ function App() {
                 {t.howToUseProfiles}
               </p>
               <ul style={{
-                margin: 0,
+                margin: "0 0 0.75rem 0",
                 paddingLeft: "1.25rem",
                 fontSize: "0.85rem",
                 color: "var(--ira-text-muted)",
@@ -2642,6 +2642,16 @@ function App() {
                 <li>{t.profileStep2}</li>
                 <li>{t.profileStep3}</li>
               </ul>
+              <p style={{
+                margin: "0.75rem 0 0 0",
+                fontSize: "0.85rem",
+                color: "var(--ira-accent)",
+                fontStyle: "italic",
+                paddingTop: "0.75rem",
+                borderTop: "1px solid rgba(249, 115, 22, 0.2)"
+              }}>
+                {t.profileTip}
+              </p>
             </div>
           </div>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
@@ -3244,42 +3254,166 @@ function App() {
           </button>
         </div>
 
+        {/* Explanation */}
+        <div style={{
+          marginBottom: "1.5rem",
+          padding: "1rem",
+          background: "rgba(249, 115, 22, 0.08)",
+          border: "1px solid rgba(249, 115, 22, 0.2)",
+          borderRadius: "0.75rem",
+          borderLeft: "3px solid var(--ira-accent)"
+        }}>
+          <p style={{
+            margin: "0 0 0.75rem 0",
+            fontSize: "0.95rem",
+            color: "var(--ira-text-main)",
+            lineHeight: "1.6"
+          }}>
+            {t.applicationTrackerExplanation}
+          </p>
+          <div style={{ marginTop: "0.75rem" }}>
+            <p style={{
+              margin: "0 0 0.5rem 0",
+              fontSize: "0.85rem",
+              fontWeight: "600",
+              color: "var(--ira-accent)",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
+              {t.applicationTrackerHowTo}
+            </p>
+            <ul style={{
+              margin: 0,
+              paddingLeft: "1.25rem",
+              fontSize: "0.85rem",
+              color: "var(--ira-text-muted)",
+              lineHeight: "1.8"
+            }}>
+              <li>{t.applicationStep1}</li>
+              <li>{t.applicationStep2}</li>
+              <li>{t.applicationStep3}</li>
+            </ul>
+          </div>
+        </div>
+
         {showAddApplication && (
-          <div style={{ padding: "1rem", backgroundColor: "rgba(15, 23, 42, 0.5)", borderRadius: "8px", marginBottom: "1rem", border: "1px solid var(--ira-border-subtle)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "1rem" }}>
+          <div style={{
+            padding: "1.75rem",
+            backgroundColor: "rgba(15, 23, 42, 0.7)",
+            borderRadius: "12px",
+            marginBottom: "1.5rem",
+            border: "1.5px solid var(--ira-border-subtle)",
+            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)"
+          }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.25rem", marginBottom: "1.5rem" }}>
               <div>
-                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.company} *</label>
+                <label style={{
+                  display: "block",
+                  marginBottom: "0.625rem",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  color: "var(--ira-text-main)",
+                  letterSpacing: "0.01em"
+                }}>
+                  {t.company} <span style={{ color: "var(--ira-accent)" }}>*</span>
+                </label>
                 <input
                   type="text"
                   value={newApplication.company}
                   onChange={(e) => setNewApplication({ ...newApplication, company: e.target.value })}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid var(--ira-border-subtle)", background: "rgba(15, 23, 42, 0.6)", color: "var(--ira-text-main)" }}
+                  className="text-input"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    border: "1.5px solid var(--ira-border-subtle)",
+                    background: "rgba(15, 23, 42, 0.8)",
+                    color: "var(--ira-text-main)",
+                    fontSize: "0.95rem",
+                    transition: "all 0.3s ease"
+                  }}
                 />
               </div>
               <div>
-                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.position} *</label>
+                <label style={{
+                  display: "block",
+                  marginBottom: "0.625rem",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  color: "var(--ira-text-main)",
+                  letterSpacing: "0.01em"
+                }}>
+                  {t.position} <span style={{ color: "var(--ira-accent)" }}>*</span>
+                </label>
                 <input
                   type="text"
                   value={newApplication.position}
                   onChange={(e) => setNewApplication({ ...newApplication, position: e.target.value })}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid var(--ira-border-subtle)", background: "rgba(15, 23, 42, 0.6)", color: "var(--ira-text-main)" }}
+                  className="text-input"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    border: "1.5px solid var(--ira-border-subtle)",
+                    background: "rgba(15, 23, 42, 0.8)",
+                    color: "var(--ira-text-main)",
+                    fontSize: "0.95rem",
+                    transition: "all 0.3s ease"
+                  }}
                 />
               </div>
               <div>
-                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.appliedDate}</label>
+                <label style={{
+                  display: "block",
+                  marginBottom: "0.625rem",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  color: "var(--ira-text-main)",
+                  letterSpacing: "0.01em"
+                }}>
+                  {t.appliedDate}
+                </label>
                 <input
                   type="date"
                   value={newApplication.appliedDate}
                   onChange={(e) => setNewApplication({ ...newApplication, appliedDate: e.target.value })}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid var(--ira-border-subtle)", background: "rgba(15, 23, 42, 0.6)", color: "var(--ira-text-main)" }}
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    border: "1.5px solid var(--ira-border-subtle)",
+                    background: "rgba(15, 23, 42, 0.8)",
+                    color: "var(--ira-text-main)",
+                    fontSize: "0.95rem",
+                    transition: "all 0.3s ease"
+                  }}
                 />
               </div>
               <div>
-                <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.status}</label>
+                <label style={{
+                  display: "block",
+                  marginBottom: "0.625rem",
+                  fontWeight: "600",
+                  fontSize: "0.9rem",
+                  color: "var(--ira-text-main)",
+                  letterSpacing: "0.01em"
+                }}>
+                  {t.status}
+                </label>
                 <select
                   value={newApplication.status}
                   onChange={(e) => setNewApplication({ ...newApplication, status: e.target.value })}
-                  style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid var(--ira-border-subtle)", background: "rgba(15, 23, 42, 0.6)", color: "var(--ira-text-main)" }}
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    border: "1.5px solid var(--ira-border-subtle)",
+                    background: "rgba(15, 23, 42, 0.8)",
+                    color: "var(--ira-text-main)",
+                    fontSize: "0.95rem",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease"
+                  }}
                 >
                   <option value="applied">{t.applied}</option>
                   <option value="interview">{t.interview}</option>
@@ -3288,34 +3422,91 @@ function App() {
                 </select>
               </div>
             </div>
-            <div style={{ marginBottom: "1rem" }}>
-              <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.jobLink}</label>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <label style={{
+                display: "block",
+                marginBottom: "0.625rem",
+                fontWeight: "600",
+                fontSize: "0.9rem",
+                color: "var(--ira-text-main)",
+                letterSpacing: "0.01em"
+              }}>
+                {t.jobLink}
+              </label>
               <input
                 type="url"
                 value={newApplication.jobLink}
                 onChange={(e) => setNewApplication({ ...newApplication, jobLink: e.target.value })}
                 placeholder="https://..."
-                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
+                className="text-input"
+                style={{
+                  width: "100%",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "8px",
+                  border: "1.5px solid var(--ira-border-subtle)",
+                  background: "rgba(15, 23, 42, 0.8)",
+                  color: "var(--ira-text-main)",
+                  fontSize: "0.95rem",
+                  transition: "all 0.3s ease"
+                }}
               />
             </div>
-            <div style={{ marginBottom: "1rem" }}>
-              <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "500" }}>{t.notes}</label>
+            <div style={{ marginBottom: "1.75rem" }}>
+              <label style={{
+                display: "block",
+                marginBottom: "0.625rem",
+                fontWeight: "600",
+                fontSize: "0.9rem",
+                color: "var(--ira-text-main)",
+                letterSpacing: "0.01em"
+              }}>
+                {t.notes}
+              </label>
               <textarea
                 value={newApplication.notes}
                 onChange={(e) => setNewApplication({ ...newApplication, notes: e.target.value })}
                 placeholder={language === "de" ? "Notizen zur Bewerbung..." : "Notes about this application..."}
-                style={{ width: "100%", padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", minHeight: "80px" }}
+                className="small-textarea"
+                style={{
+                  width: "100%",
+                  padding: "0.875rem 1rem",
+                  borderRadius: "8px",
+                  border: "1.5px solid var(--ira-border-subtle)",
+                  background: "rgba(15, 23, 42, 0.8)",
+                  color: "var(--ira-text-main)",
+                  fontSize: "0.95rem",
+                  minHeight: "100px",
+                  lineHeight: "1.6",
+                  resize: "vertical",
+                  transition: "all 0.3s ease"
+                }}
               />
             </div>
-            <div style={{ display: "flex", gap: "0.5rem" }}>
-              <button className="primary-btn" onClick={editingApp ? handleUpdateApplication : handleAddApplication}>
-                {t.save}
-              </button>
-              <button className="secondary-btn" onClick={() => {
-                setShowAddApplication(false);
-                setEditingApp(null);
-              }}>
+            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end", paddingTop: "0.5rem", borderTop: "1px solid var(--ira-border-subtle)" }}>
+              <button
+                className="secondary-btn"
+                onClick={() => {
+                  setShowAddApplication(false);
+                  setEditingApp(null);
+                }}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  fontSize: "0.9rem",
+                  fontWeight: "500"
+                }}
+              >
                 {t.cancel}
+              </button>
+              <button
+                className="primary-btn"
+                onClick={editingApp ? handleUpdateApplication : handleAddApplication}
+                style={{
+                  padding: "0.75rem 1.75rem",
+                  fontSize: "0.9rem",
+                  fontWeight: "600"
+                }}
+              >
+                {t.save}
               </button>
             </div>
           </div>
@@ -3403,6 +3594,49 @@ function App() {
       {/* Company Research Helper */}
       <section className="panel" style={{ margin: "1rem 0", padding: "1.5rem" }}>
         <h2>{t.companyResearch}</h2>
+
+        {/* Explanation */}
+        <div style={{
+          marginBottom: "1.5rem",
+          padding: "1rem",
+          background: "rgba(249, 115, 22, 0.08)",
+          border: "1px solid rgba(249, 115, 22, 0.2)",
+          borderRadius: "0.75rem",
+          borderLeft: "3px solid var(--ira-accent)"
+        }}>
+          <p style={{
+            margin: "0 0 0.75rem 0",
+            fontSize: "0.95rem",
+            color: "var(--ira-text-main)",
+            lineHeight: "1.6"
+          }}>
+            {t.companyResearchExplanation}
+          </p>
+          <div style={{ marginTop: "0.75rem" }}>
+            <p style={{
+              margin: "0 0 0.5rem 0",
+              fontSize: "0.85rem",
+              fontWeight: "600",
+              color: "var(--ira-accent)",
+              textTransform: "uppercase",
+              letterSpacing: "0.05em"
+            }}>
+              {t.companyResearchHowTo}
+            </p>
+            <ul style={{
+              margin: 0,
+              paddingLeft: "1.25rem",
+              fontSize: "0.85rem",
+              color: "var(--ira-text-muted)",
+              lineHeight: "1.8"
+            }}>
+              <li>{t.companyStep1}</li>
+              <li>{t.companyStep2}</li>
+              <li>{t.companyStep3}</li>
+            </ul>
+          </div>
+        </div>
+
         <p className="hint" style={{ marginBottom: "1rem" }}>{t.searchInfo}</p>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
           <input
