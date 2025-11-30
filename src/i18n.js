@@ -148,6 +148,7 @@ export const translations = {
         profileStep2: "2. Save it – Enter a name (e.g., 'Frontend Developer') and click 'Save Profile'",
         profileStep3: "3. Switch anytime – Click any profile button to instantly load that complete setup",
         profileTip: "💡 Tip: Create profiles after you've set up your CV and job titles for the best experience.",
+        profileStorageInfo: "📦 Storage: Your profiles are saved locally in your browser. They persist until you clear browser data or use the app in private/incognito mode.",
     },
     de: {
         // Header
@@ -297,6 +298,7 @@ export const translations = {
         profileStep2: "2. Speichern – Gib einen Namen ein (z.B. 'Frontend Developer') und klicke auf 'Profil speichern'",
         profileStep3: "3. Jederzeit wechseln – Klicke auf einen Profil-Button, um dieses komplette Setup sofort zu laden",
         profileTip: "💡 Tipp: Erstelle Profile am besten, nachdem du dein CV und Jobtitel eingerichtet hast.",
+        profileStorageInfo: "📦 Speicherung: Deine Profile werden lokal in deinem Browser gespeichert. Sie bleiben erhalten, bis du die Browser-Daten löschst oder die App im Privatmodus verwendest.",
     },
 };
 

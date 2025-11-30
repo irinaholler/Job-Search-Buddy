@@ -268,7 +268,7 @@ body {
 
 .small-textarea {
   width: 100%;
-  min-height: 120px;
+  min-height: 180px;
   border-radius: 0.875rem;
   border: 1.5px solid var(--ira-border-subtle);
   padding: 0.9rem 1.1rem;

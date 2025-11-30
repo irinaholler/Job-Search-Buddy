@@ -2130,6 +2130,12 @@ function App() {
   const [showProfileManager, setShowProfileManager] = useState(false);
   const [newProfileName, setNewProfileName] = useState("");
 
+  // Toast Notification
+  const [toast, setToast] = useState(null);
+
+  // Confirm Modal
+  const [confirmModal, setConfirmModal] = useState(null);
+
   // Load profile from localStorage on mount
   useEffect(() => {
     const savedProfile = localStorage.getItem(`jobSearchProfile_${currentProfileName}`);
@@ -2161,9 +2167,26 @@ function App() {
     }
   }, [profile, cvText, customPortals, currentProfileName]);
 
+  const showToast = (message, type = "success") => {
+    setToast({ message, type, id: Date.now() });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const showConfirm = (message, onConfirm) => {
+    setConfirmModal({
+      message,
+      onConfirm: () => {
+        onConfirm();
+        setConfirmModal(null);
+      },
+      onCancel: () => setConfirmModal(null),
+      id: Date.now()
+    });
+  };
+
   const handleAnalyzeCv = () => {
     if (!cvText.trim()) {
-      alert(t.noCvText);
+      showToast(t.noCvText, "error");
       return;
     }
 
@@ -2181,7 +2204,7 @@ function App() {
     if (!file) return;
 
     if (file.type !== "application/pdf") {
-      alert(t.invalidPdf);
+      showToast(t.invalidPdf, "error");
       return;
     }
 
@@ -2190,14 +2213,14 @@ function App() {
       const text = await readPdfFile(file);
 
       if (!text.trim()) {
-        alert(t.pdfReadError);
+        showToast(t.pdfReadError, "error");
         return;
       }
 
       setCvText(text);
     } catch (error) {
       console.error(error);
-      alert(t.pdfReadError);
+      showToast(t.pdfReadError, "error");
     } finally {
       setLoadingPdf(false);
     }
@@ -2273,10 +2296,11 @@ function App() {
     const titles = parseTitles();
 
     if (!titles || titles.length === 0) {
-      alert(
+      showToast(
         language === "de"
           ? "Bitte füge mindestens einen Jobtitel hinzu."
-          : "Please add at least one job title."
+          : "Please add at least one job title.",
+        "error"
       );
       return;
     }
@@ -2327,7 +2351,7 @@ function App() {
   // Application Tracker handlers
   const handleAddApplication = () => {
     if (!newApplication.company || !newApplication.position) {
-      alert(language === "de" ? "Bitte gib mindestens Firma und Position ein." : "Please enter at least company and position.");
+      showToast(language === "de" ? "Bitte gib mindestens Firma und Position ein." : "Please enter at least company and position.", "error");
       return;
     }
     const app = {
@@ -2345,7 +2369,7 @@ function App() {
       jobLink: "",
     });
     setShowAddApplication(false);
-    alert(t.applicationSaved);
+    showToast(t.applicationSaved, "success");
   };
 
   const handleEditApplication = (app) => {
@@ -2356,7 +2380,7 @@ function App() {
 
   const handleUpdateApplication = () => {
     if (!newApplication.company || !newApplication.position) {
-      alert(language === "de" ? "Bitte gib mindestens Firma und Position ein." : "Please enter at least company and position.");
+      showToast(language === "de" ? "Bitte gib mindestens Firma und Position ein." : "Please enter at least company and position.", "error");
       return;
     }
     setApplications(applications.map(app =>
@@ -2372,20 +2396,23 @@ function App() {
       jobLink: "",
     });
     setShowAddApplication(false);
-    alert(t.applicationSaved);
+    showToast(t.applicationSaved, "success");
   };
 
   const handleDeleteApplication = (id) => {
-    if (confirm(language === "de" ? "Bewerbung wirklich löschen?" : "Really delete this application?")) {
-      setApplications(applications.filter(app => app.id !== id));
-      alert(t.applicationDeleted);
-    }
+    showConfirm(
+      language === "de" ? "Bewerbung wirklich löschen?" : "Really delete this application?",
+      () => {
+        setApplications(applications.filter(app => app.id !== id));
+        showToast(t.applicationDeleted, "success");
+      }
+    );
   };
 
   // Multi-Profile handlers
   const handleSaveProfile = () => {
     if (!newProfileName.trim()) {
-      alert(language === "de" ? "Bitte gib einen Profilnamen ein." : "Please enter a profile name.");
+      showToast(language === "de" ? "Bitte gib einen Profilnamen ein." : "Please enter a profile name.", "error");
       return;
     }
     const profileToSave = {
@@ -2398,7 +2425,7 @@ function App() {
     setProfiles(updatedProfiles);
     localStorage.setItem("jobSearchProfiles", JSON.stringify(updatedProfiles));
     setNewProfileName("");
-    alert(t.profileSaved);
+    showToast(t.profileSaved, "success");
   };
 
   const handleLoadProfile = (profileName) => {
@@ -2409,34 +2436,37 @@ function App() {
       setCustomPortals(profileToLoad.customPortals || []);
       setCurrentProfileName(profileName);
       setShowProfileManager(false);
-      alert(t.profileLoaded);
+      showToast(t.profileLoaded, "success");
     }
   };
 
   const handleDeleteProfile = (profileName) => {
     if (profileName === "default") {
-      alert(language === "de" ? "Das Standard-Profil kann nicht gelöscht werden." : "The default profile cannot be deleted.");
+      showToast(language === "de" ? "Das Standard-Profil kann nicht gelöscht werden." : "The default profile cannot be deleted.", "error");
       return;
     }
-    if (confirm(language === "de" ? `Profil "${profileName}" wirklich löschen?` : `Really delete profile "${profileName}"?`)) {
-      const updatedProfiles = { ...profiles };
-      delete updatedProfiles[profileName];
-      setProfiles(updatedProfiles);
-      localStorage.setItem("jobSearchProfiles", JSON.stringify(updatedProfiles));
-      if (currentProfileName === profileName) {
-        setCurrentProfileName("default");
-        setProfile({
-          titles: [],
-          titlesRaw: "",
-          skills: [],
-          directions: [],
-          alternativeTitles: [],
-          location: "",
-        });
-        setCvText("");
+    showConfirm(
+      language === "de" ? `Profil "${profileName}" wirklich löschen?` : `Really delete profile "${profileName}"?`,
+      () => {
+        const updatedProfiles = { ...profiles };
+        delete updatedProfiles[profileName];
+        setProfiles(updatedProfiles);
+        localStorage.setItem("jobSearchProfiles", JSON.stringify(updatedProfiles));
+        if (currentProfileName === profileName) {
+          setCurrentProfileName("default");
+          setProfile({
+            titles: [],
+            titlesRaw: "",
+            skills: [],
+            directions: [],
+            alternativeTitles: [],
+            location: "",
+          });
+          setCvText("");
+        }
+        showToast(t.profileDeleted, "success");
       }
-      alert(t.profileDeleted);
-    }
+    );
   };
 
   const handleExportProfile = () => {
@@ -2473,9 +2503,9 @@ function App() {
           setProfiles(updatedProfiles);
           localStorage.setItem("jobSearchProfiles", JSON.stringify(updatedProfiles));
         }
-        alert(t.profileLoaded);
+        showToast(t.profileLoaded, "success");
       } catch (error) {
-        alert(language === "de" ? "Fehler beim Laden des Profils." : "Error loading profile.");
+        showToast(language === "de" ? "Fehler beim Laden des Profils." : "Error loading profile.", "error");
       }
     };
     reader.readAsText(file);
@@ -2652,6 +2682,16 @@ function App() {
               }}>
                 {t.profileTip}
               </p>
+              <p style={{
+                margin: "0.75rem 0 0 0",
+                fontSize: "0.8rem",
+                color: "var(--ira-text-muted)",
+                paddingTop: "0.75rem",
+                borderTop: "1px solid rgba(249, 115, 22, 0.1)",
+                lineHeight: "1.6"
+              }}>
+                {t.profileStorageInfo}
+              </p>
             </div>
           </div>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
@@ -2725,7 +2765,7 @@ function App() {
           <div className="file-upload" style={{
             border: "2px dashed var(--ira-border-subtle)",
             borderRadius: "12px",
-            padding: "2rem 1.5rem",
+            padding: "1.25rem 1.5rem",
             textAlign: "center",
             marginBottom: "1.5rem",
             backgroundColor: "rgba(15, 23, 42, 0.6)",
@@ -2754,19 +2794,19 @@ function App() {
               width: "100%"
             }}>
               <div style={{
-                width: "64px",
-                height: "64px",
+                width: "52px",
+                height: "52px",
                 borderRadius: "50%",
                 background: "var(--ira-accent-soft)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "2rem",
+                fontSize: "1.6rem",
                 boxShadow: "0 4px 12px rgba(249, 115, 22, 0.2)"
               }}>
                 📄
               </div>
-              <span style={{ fontSize: "1.15rem", fontWeight: "600", color: "var(--ira-text-main)" }}>
+              <span style={{ fontSize: "1rem", fontWeight: "600", color: "var(--ira-text-main)" }}>
                 {t.uploadPdf}
               </span>
               <input
@@ -3692,6 +3732,221 @@ function App() {
           </div>
         )}
       </section>
+
+      {/* Confirm Modal */}
+      {confirmModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 0, 0, 0.75)",
+            backdropFilter: "blur(8px)",
+            animation: "fadeIn 0.2s ease-out"
+          }}
+          onClick={() => setConfirmModal(null)}
+        >
+          <div
+            style={{
+              background: "radial-gradient(circle at top left, #111827 0, #020617 60%)",
+              borderRadius: "16px",
+              padding: "2rem",
+              maxWidth: "480px",
+              width: "90%",
+              border: "1.5px solid var(--ira-border-subtle)",
+              boxShadow: "0 24px 48px rgba(0, 0, 0, 0.6)",
+              animation: "slideUp 0.3s ease-out"
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              marginBottom: "1.5rem"
+            }}>
+              <div style={{
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: "rgba(239, 68, 68, 0.15)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.5rem",
+                flexShrink: 0
+              }}>
+                ⚠️
+              </div>
+              <h3 style={{
+                margin: 0,
+                fontSize: "1.25rem",
+                fontWeight: "600",
+                color: "var(--ira-text-main)"
+              }}>
+                {language === "de" ? "Bestätigung erforderlich" : "Confirmation Required"}
+              </h3>
+            </div>
+            <p style={{
+              margin: "0 0 2rem 0",
+              fontSize: "1rem",
+              color: "var(--ira-text-main)",
+              lineHeight: "1.6",
+              paddingLeft: "64px"
+            }}>
+              {confirmModal.message}
+            </p>
+            <div style={{
+              display: "flex",
+              gap: "0.75rem",
+              justifyContent: "flex-end"
+            }}>
+              <button
+                className="secondary-btn"
+                onClick={confirmModal.onCancel}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  fontSize: "0.95rem",
+                  fontWeight: "500"
+                }}
+              >
+                {language === "de" ? "Abbrechen" : "Cancel"}
+              </button>
+              <button
+                onClick={confirmModal.onConfirm}
+                style={{
+                  padding: "0.75rem 1.75rem",
+                  fontSize: "0.95rem",
+                  fontWeight: "600",
+                  borderRadius: "999px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "rgba(239, 68, 68, 0.9)",
+                  color: "white",
+                  transition: "all 0.2s ease",
+                  boxShadow: "0 4px 12px rgba(239, 68, 68, 0.3)"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(239, 68, 68, 1)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 6px 16px rgba(239, 68, 68, 0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(239, 68, 68, 0.9)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(239, 68, 68, 0.3)";
+                }}
+              >
+                {language === "de" ? "Löschen" : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div
+          style={{
+            position: "fixed",
+            top: "2rem",
+            right: "2rem",
+            zIndex: 10000,
+            padding: "1rem 1.5rem",
+            borderRadius: "12px",
+            background: toast.type === "success"
+              ? "rgba(16, 185, 129, 0.95)"
+              : "rgba(239, 68, 68, 0.95)",
+            color: "white",
+            fontSize: "0.95rem",
+            fontWeight: "500",
+            boxShadow: "0 12px 32px rgba(0, 0, 0, 0.4)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            minWidth: "280px",
+            maxWidth: "400px",
+            animation: "slideInRight 0.3s ease-out",
+            backdropFilter: "blur(10px)"
+          }}
+          onClick={() => setToast(null)}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.cursor = "pointer";
+            e.currentTarget.style.opacity = "0.9";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = "1";
+          }}
+        >
+          <span style={{ fontSize: "1.25rem" }}>
+            {toast.type === "success" ? "✓" : "✕"}
+          </span>
+          <span style={{ flex: 1 }}>{toast.message}</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setToast(null);
+            }}
+            style={{
+              background: "transparent",
+              border: "none",
+              color: "white",
+              fontSize: "1.25rem",
+              cursor: "pointer",
+              padding: "0",
+              width: "24px",
+              height: "24px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: "0.8",
+              transition: "opacity 0.2s"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = "1"}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = "0.8"}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes slideUp {
+          from {
+            transform: translateY(20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }
